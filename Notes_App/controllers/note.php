@@ -22,7 +22,7 @@ if (!$note) {
 
 
 if($note['user_id'] !== $currentUserId) {
-    abort(403);
+    abort(Response::FORBIDDEN);
 }
 
 require "views/note.view.php";
