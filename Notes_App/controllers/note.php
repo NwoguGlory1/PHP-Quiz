@@ -10,7 +10,7 @@ $heading = "Note";
 $currentUserId = 1;
 
 
-// tracks note that has an id that matches the id in query string
+// tracks note that has an id that matches the id in query string.
 //$note is an instance of a PDO statement, object(PDOStatement)
 $note = $db->query('select * from notes where id = :id',
  [
