@@ -3,6 +3,7 @@
 class Database
 {
     public $connection;
+    public $statement;
 
     public function __construct($config, $username = 'root', $password = '')
     {  
@@ -15,10 +16,21 @@ class Database
 
     public function query($query, $params = [])
     {
-        $statement = $this->connection->prepare($query);
-        
-        $statement->execute($params);
+        $this->statement = $this->connection->prepare($query);
+        //$this assigns the PDO statement returned by query to $statement
+        $this->statement->execute($params);
     
-        return $statement;
+        return $this; //refers to the current instance of Database
+    }
+
+    public function find()
+    {
+        return $this->statement->fetch(); // Fetch a single result as an object
+    }
+
+
+    public function findAll()
+    {
+        return $this->statement->fetchAll();
     }
 }
