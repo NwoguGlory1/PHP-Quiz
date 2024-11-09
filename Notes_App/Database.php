@@ -29,7 +29,7 @@ class Database
     }
 
 
-    public function findAll()
+    public function get()
     {
         return $this->statement->fetchAll();
     }
