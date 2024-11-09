@@ -11,10 +11,12 @@ $currentUserId = 1;
 
 $id = $_GET['id'];
 
+// tracks note that has an id that matches the id in query string
 $note = $db->query('select * from notes where id = :id',
  [
     'id' => $id
 ])->fetch();
+
 
 if (!$note) {
     abort();
