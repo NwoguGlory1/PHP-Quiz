@@ -1,14 +1,18 @@
 <?php
 $config = require('config.php');
+require 'Validator.php';
 
 // instance of the Database class
 $db = new Database($config['database']);
 
 $heading = "Create Note";
+
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $errors = []; //$errors array to store error messages
 
-    if (strlen($_POST['body']) == 0) {
+    $validator = new Validator();
+
+    if ($validator ->string($_POST['body'])) {
         $errors['body'] = 'A body is required'; //$errors['body'] is adding a new key-value pair to the $errors array.
     } //same as $errors = ['body' => 'A body is required']
 
