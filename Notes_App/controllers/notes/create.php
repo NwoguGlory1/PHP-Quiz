@@ -1,15 +1,13 @@
 <?php
-$config = require('config.php');
-require 'Validator.php';
+$config = require base_path('config.php');
+require base_path('Validator.php');
 
 // instance of the Database class
 $db = new Database($config['database']);
 
-$heading = "Create Note";
+$errors = []; //$errors array to store error messages
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $errors = []; //$errors array to store error messages
-
 
     if (!Validator::string($_POST['body'], 1, 1000)) {
         $errors['body'] = 'A body of not more than 1000 characters is required'; //$errors['body'] is adding a new key-value pair to the $errors array.
@@ -25,4 +23,4 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 }
 
 
-require "views/notes/create.view.php";
+view("notes/create.view.php" , ['heading' => 'Create Note', 'errors' => $errors]);
