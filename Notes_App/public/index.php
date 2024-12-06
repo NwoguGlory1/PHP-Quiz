@@ -5,10 +5,11 @@ const BASE_PATH = __DIR__ . '/../';
 
 require BASE_PATH . "Core/functions.php";
 
-spl_autoload_register(function($class) {
-    require base_path("Core/{$class}.php");
-    //$class . '.php means /public/../Database.php" where $class is Databse
-    //spl_autoload_register helps to manually import classes that have not been required.
+spl_autoload_register(function ($class) {
+   // Core\Database
+   $class = str_replace('\\', DIRECTORY_SEPARATOR, $class);
+
+   require base_path("{$class}.php");
 });
 
 require base_path('Core/router.php');

@@ -1,5 +1,5 @@
 <?php
-
+use Core\Response;
 
 function dd($value)
 {
