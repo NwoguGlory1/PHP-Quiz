@@ -14,4 +14,10 @@
     </div>
   </main>
 
+  <form class="mt-6" method="POST">
+    <!-- We hide the id of the note we are submitting when Delete is clicked -->
+      <input type="hidden" name="id" value="<?= $note['id'] ?>">
+        <button class="text-sm text-red-500">Delete</button>
+  </form>
+
   <?php require base_path('views/partials/footer.php') ?>
