@@ -12,17 +12,12 @@ spl_autoload_register(function ($class) {
    require base_path("{$class}.php");
 });
 
-require base_path('Core/router.php');
+$router = new \Core\Router();
 
-// Load the configuration for the database
-$config = require('config.php');
+$routes = require base_path('routes.php');
 
-// Create a new Database instance
-$db = new Database($config['database']);
-$id = $_GET['id'];
+$uri = parse_url($_SERVER['REQUEST_URI'])['path'];
+$method = $_POST['_method'] ?? $_SERVER['REQUEST_METHOD'];
+//$method = isset($POST['_method']) ? $_POST['_method'] : $_SERVER['REQUEST_METHOD'];
 
-$query = "select * from posts where id = ?";
-
-$posts = $db->query($query, [$id])->find();
- 
-// dd($posts);
+$router->route($uri, $method);

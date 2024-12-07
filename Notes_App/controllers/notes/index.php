@@ -1,5 +1,6 @@
 <?php
 
+//  controller to list all created notes
 use Core\Database;
 
 $config = require base_path('config.php');
