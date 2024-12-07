@@ -11,16 +11,11 @@
         <p>
             <?= htmlspecialchars($note['body']) ?>
         </p>
+
+        <footer class="mt-6">
+            <a href="/note/edit?id=<?= $note['id'] ?>" class="inline-flex justify-center rounded-md border border-transparent bg-gray-500 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">Edit</a>
+        </footer>
     </div>
   </main>
-
-  <form class="mt-6" method="POST">
-    <!-- We used this: _method" to let the router listen to a DELETE request inside the POST because browsers only allow GET, POST requests -->
-    <!-- Check public/index.php to see where we referenced _method -->
-    <input type="hidden" name="_method" value="DELETE">
-    <!-- We hide the id of the note we are submitting when Delete is clicked -->
-      <input type="hidden" name="id" value="<?= $note['id'] ?>">
-        <button class="text-sm text-red-500">Delete</button>
-  </form>
 
   <?php require base_path('views/partials/footer.php') ?>
