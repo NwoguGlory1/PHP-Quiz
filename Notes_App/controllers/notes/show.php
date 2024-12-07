@@ -1,12 +1,9 @@
 <?php
-
-//  controller to show a particular note
+use Core\App;
 use Core\Database;
 
-$config = require base_path('config.php');
-
-// instance of the Database class
-$db = new Database($config['database']);
+//  controller to show a particular note
+$db = App::resolve(Database::class);
 
 
 $currentUserId = 1;

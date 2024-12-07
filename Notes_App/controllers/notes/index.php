@@ -1,12 +1,9 @@
 <?php
-
-//  controller to list all created notes
+use Core\App;
 use Core\Database;
 
-$config = require base_path('config.php');
-
-// instance of the Database class
-$db = new Database($config['database']);
+//  controller to list all created notes
+$db = App::resolve(Database::class);
 
 
 $notes = $db->query('select * from notes where user_id=1')->get();
