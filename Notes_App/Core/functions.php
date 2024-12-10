@@ -42,3 +42,11 @@ function view($path, $attributes = [])
     require base_path('views/' . $path);
     //for view("index.view.php"), will load views/index.view.php
 }
+
+function login($user) {
+    //mark that the user has logged in by setting the user session
+    $_SESSION['user'] = [
+        'email' => $user['email'] //passing in the email the user provided
+    ];
+
+}
