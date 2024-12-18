@@ -1,4 +1,5 @@
 <?php
+
 use Core\Response;
 
 function dd($value)
@@ -44,9 +45,35 @@ function view($path, $attributes = [])
 }
 
 function login($user) {
+    //putting the session start here, is it ok??
+    
     //mark that the user has logged in by setting the user session
     $_SESSION['user'] = [
-        'email' => $user['email'] //passing in the email the user provided
+        'email' => $user['email'], //passing in the email the user provided
+        'firstname' => $user['firstname'],
+        'lastname' => $user['lastname'] 
+     
+        
     ];
+       //create a cookie
+    setcookie("auth_user", $user['id'], time() + (36000), "/");
+ 
+    session_regenerate_id(true);
+    //regenerate session id, update cookie & session file name is good practice of login
+}
+
+    function logout()
+{
+
+    /// Unset all session variables
+    $_SESSION = [];
+
+    //destroys out the session 
+    session_destroy();
+
+    //delete the cookie
+    //session_get_cookie_params is used to get the path, domain, etc cause it returns an array with all these contained in it
+    $params = session_get_cookie_params();
+    setcookie('PHPSESSID', '', time() - 3600, $params['path'], $params['domain'], $params['secure'], $params['httponly']);
 
 }

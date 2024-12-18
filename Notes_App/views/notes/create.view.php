@@ -7,12 +7,12 @@
 
 <form method= "POST" action="/notes">
         <div class="col-span-full">
-          <label for="body class="block text-sm/6 font-medium text-gray-900">Body</label>
+        <label for="body" class="block text-sm/6 font-medium text-gray-900">Body</label>
           <div class="mt-2">
             <textarea id="body" name="body" rows="3" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm/6">
               <?= isset($_POST['body']) ? $_POST['body'] : ''?> 
-              <!--echoes out the result if $_POST['body'] exists (i.e., the user submitted the form and the body field has a value); ensures that the user’s input remains in the -->
-              <!--If $_POST['body'] does not exist, an empty string is displayed  -->
+              <!--echoes out the result if $_POST['body'] exists (i.e., the user submitted the form and the body field has a value); ensures that the user’s input remains in the browser -->
+              <!-- If $_POST['body'] does not exist, an empty string is displayed  -->
             </textarea>
             
             <?php if (isset($errors['body'])) : ?> 

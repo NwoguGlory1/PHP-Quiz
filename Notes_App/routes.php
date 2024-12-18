@@ -4,7 +4,7 @@ $router->get('/', 'controllers/index.php');
 $router->get('/about', 'controllers/about.php');
 $router->get('/contact', 'controllers/contact.php');
 
-$router->get('/notes', 'controllers/notes/index.php');
+$router->get('/notes', 'controllers/notes/index.php')->only('auth');
 $router->get('/note', 'controllers/notes/show.php');
 $router->delete('/note', 'controllers/notes/destroy.php');
 
@@ -14,10 +14,12 @@ $router->patch('/note', 'controllers/notes/update.php');
 $router->get('/notes/create', 'controllers/notes/create.php');
 $router->post('/notes', 'controllers/notes/store.php'); 
 
-$router->get('/register', 'controllers/registration/create.php');
-$router->post('/register', 'controllers/registration/store.php');
+$router->get('/register', 'controllers/registration/create.php')->only('guest');
+$router->post('/register', 'controllers/registration/store.php')->only('guest');
 
 $router->get('/login', 'controllers/session/create.php');
 $router->post('/login', 'controllers/session/store.php');
 
-// $router->get('/dashboard', 'controllers/dashboard.php');
+$router->get('/dashboard', 'controllers/dashboard.php')->only('auth');
+
+$router->delete('/session', 'controllers/session/destroy.php')->only('auth');

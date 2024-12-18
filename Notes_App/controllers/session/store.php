@@ -26,28 +26,29 @@ if (! empty($errors)) {
     ]);
 }
 
-//if no error, to login, first match the credentials 
+//if no error, to login, first match the credentials.
+//we first match the email
 $user = $db->query('select * from users where email = :email', [
     'email' => $email
 ])->find();
 
 
-
-
-//if there is a user, compare the password entered with the db hashed password.
-//I PAUSED HERE 
+//if there is a user with that email, match the password by comparing the password entered with the db hashed password.
 if ($user) {
     if (password_verify($password, $user['password'])) {
+        session_start();
         login([
-            'email' => $email
+            'email' => $user['email'],
+            'firstname' => $user['firstname'],
+            'lastname' => $user['lastname']
         ]);
 
-        header('location: /');
+        header('location: /dashboard');
         exit();
     }
 }
 return view('session/create.view.php', [
-    'errors' => ['email' => 'No matching account found for that email address and password']
+    'errors' => ['email' => 'Invalid credentials.']
     ]);
 
 
