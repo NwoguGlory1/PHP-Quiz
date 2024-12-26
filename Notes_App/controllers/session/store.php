@@ -36,21 +36,28 @@ $user = $db->query('select * from users where email = :email', [
 //if there is a user with that email, match the password by comparing the password entered with the db hashed password.
 if ($user) {
     if (password_verify($password, $user['password'])) {
-        session_start();
-        login([
-            'email' => $user['email'],
-            'firstname' => $user['firstname'],
-            'lastname' => $user['lastname']
-        ]);
-
-        header('location: /dashboard');
+        login($user);
+// Redirect based on role
+    if ($_SESSION['role'] == 'supervisor') {
+        // Supervisors can access the dashboard directly
+        header('location: /');
         exit();
+    } elseif ($_SESSION['role'] == 'agent') {
+        // Check if the agent is approved
+        if ($_SESSION['approved'] == false) {
+            // Agents who are not approved cannot access the dashboard
+            header('location: /');
+            exit();
+        }
+         // Approved agents can access the dashboard
+         header('location: /');  // Redirect to the home page for agents
+         exit();
+    }
+
     }
 }
 return view('session/create.view.php', [
     'errors' => ['email' => 'Invalid credentials.']
     ]);
-
-
 
 // If they equal, then a session must be created for the user using PHP sessions as well as a cookie

@@ -3,7 +3,7 @@
 
 <?php $errors = $_SESSION['errors'] ?? [];
 
-$_SESSION['name'] = 'Daraja';
+// $_SESSION['name'] = 'Daraja';
 
 // unset($_SESSION['errors']); ?>
 

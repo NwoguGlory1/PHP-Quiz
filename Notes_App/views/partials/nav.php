@@ -14,9 +14,11 @@
               
               <?php if ($_SESSION['user'] ?? false) : ?>
               <a href="/notes" class="<?=urlIs('/notes.php') ? 'bg-gray-900 text-white': 'text-gray-300' ?> hover:bg-gray-700 hover:text-white  px-3 py-2 rounded-md text-sm font-medium" >Notes</a>
-              <a href="/dashboard" class="<?=urlIs('/dashboard.php') ? 'bg-gray-900 text-white': 'text-gray-300' ?> hover:bg-gray-700 hover:text-white  px-3 py-2 rounded-md text-sm font-medium" >Dashboard</a>
+             
+                <?php if ($_SESSION['role'] == 'supervisor' || $_SESSION['approved'] == true) : ?>
+                <a href="/dashboard" class="<?=urlIs('/dashboard.php') ? 'bg-gray-900 text-white': 'text-gray-300' ?> hover:bg-gray-700 hover:text-white  px-3 py-2 rounded-md text-sm font-medium" >Dashboard</a>
+                <?php endif ?>
               <?php endif ?>
-            
             </div>
           </div>
         </div>
@@ -36,7 +38,7 @@
                 <div class="ml-3">
                   <form method="POST" action="/session">
                     <input type="hidden" name="_method" value="DELETE"/>
-                      <button class="text-white">Log Out</button>
+                      <button class="text-white" >Log Out</button>
                   </form>
                 </div>
           <?php else : ?>

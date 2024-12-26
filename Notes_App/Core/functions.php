@@ -45,35 +45,54 @@ function view($path, $attributes = [])
 }
 
 function login($user) {
-    //putting the session start here, is it ok??
+    
     
     //mark that the user has logged in by setting the user session
     $_SESSION['user'] = [
         'email' => $user['email'], //passing in the email the user provided
         'firstname' => $user['firstname'],
-        'lastname' => $user['lastname'] 
-     
-        
+        'lastname' => $user['lastname'],
+        'role' => $user['role'],
+        'approved' => $user['approved']     
     ];
-       //create a cookie
-    setcookie("auth_user", $user['id'], time() + (36000), "/");
+
+    //you have to set the session role and other stuffs before you can access it in session/store.php
+    $_SESSION['user_id'] = $user['id'];
+    $_SESSION['role'] = $user['role']; // Store the role
+    $_SESSION['approved'] = $user['approved']; // Store approval status
+
+
+    // Set session expiration tracking
+    $_SESSION['last_activity'] = time(); // Current time
+    $_SESSION['expire_time'] = 3600; // Session duration: 1 hour (3600 seconds)
+
+       //sets a cookie, auth_user with an expiration time
+    setcookie("auth_user", $user['id'], time() + (3600), "/");
+    
  
     session_regenerate_id(true);
+    //regenerates session id
     //regenerate session id, update cookie & session file name is good practice of login
+
 }
 
-    function logout()
+function logout()
 {
-
     /// Unset all session variables
     $_SESSION = [];
 
-    //destroys out the session 
+    //destroys out the session  data on the server
     session_destroy();
 
-    //delete the cookie
+    // this actually deletes the cookie
     //session_get_cookie_params is used to get the path, domain, etc cause it returns an array with all these contained in it
     $params = session_get_cookie_params();
+    setcookie("auth_user", '', time() - 3600, $params['path'], $params['domain'], $params['secure'], $params['httponly']);
     setcookie('PHPSESSID', '', time() - 3600, $params['path'], $params['domain'], $params['secure'], $params['httponly']);
 
+    // Close the session explicitly
+    //this does not delete PHPSESSID, it is a good practice to release locks and ensure the session is not being actively used
+    session_write_close();
+    
 }
+
