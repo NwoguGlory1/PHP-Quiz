@@ -36,37 +36,35 @@ $user = $db->query('select * from users where email = :email', [
 //if there is a user with that email, match the password by comparing the password entered with the db hashed password.
 if ($user) {
     if (password_verify($password, $user['password'])) {
-        login($user);
-
-// Redirect based on role
-    if ($_SESSION['role'] == 'supervisor') {
-        // Supervisors can access the dashboard directly
-        header('location: /supervisor-dashboard');
-        exit();   
-    } elseif ($_SESSION['role'] == 'agent') {
-        // If the agent is approved, they can access the dashboard
-        if ($_SESSION['approved'] == true) {
-            header('location: /dashboard');
+        // Check if the user's role is agent and they are approved
+        if ($user['role'] === 'agent' && !$user['approved']) {
+            // If not approved, check if a request has already been sent
+            if (!$user['request_sent']) {
+                // Send the approval request
+                $db->query('UPDATE users SET request_sent = TRUE WHERE id = :id', [
+                    'id' => $user['id']
+                ]);
+                echo "Approval request sent to the supervisor.";
+            }
+            // Display waiting approval message
+            echo "<button disabled>Waiting Approval</button>";
             exit();
         }
-    
-        // If the agent is not approved, send the approval request
-    if ($_SESSION['approved'] == false && (!$_SESSION['request_sent'])) {
-            // Agents who are not approved cannot access the dashboard
-            //find() was not called on the update query cause nothing is being retrieved
-            $stmt = $db->query('UPDATE users SET request_sent = TRUE WHERE id = :id', [
-                'id' => $user['id']
-            ]);
 
-            // Display a message for the agent
-            echo "Approval request sent to the supervisor.";       
-           // Display waiting approval message
-            echo "<button disabled>Waiting Approval</button>";
+        // Login the user and redirect based on role
+        login($user);
+
+        if ($user['role'] === 'supervisor') {
+            header('location: /supervisor-dashboard');
+            exit();
+        } elseif ($user['role'] === 'agent' && $user['approved']) {
+            header('location: /dashboard');
             exit();
         }
     }
 }
+
+// Invalid credentials or approval status
 return view('session/create.view.php', [
-    'errors' => ['email' => 'Invalid credentials.']
-    ]);
-}
+    'errors' => ['email' => 'Invalid credentials or account not approved.']
+]);

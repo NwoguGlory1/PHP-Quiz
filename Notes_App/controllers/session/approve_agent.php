@@ -20,7 +20,7 @@ if ($_SESSION['role'] != 'supervisor') {
 
 // Check if the id is passed in the URL
 // Get agent ID from the URL
-$agent_id =  $_POST['id'] ?? null; //Since the form in super_dashboard.view uses POST, you fetch id from $_POST:
+$agent_id =  $_POST['id'] ?? null; //Since the form in supervisor-dashboard.view uses POST, you fetch id from $_POST:
 // dd($agent_id );
 
 if ($agent_id && filter_var($agent_id, FILTER_VALIDATE_INT)) {
