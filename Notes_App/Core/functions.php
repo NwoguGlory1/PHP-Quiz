@@ -40,8 +40,9 @@ function view($path, $attributes = [])
     extract($attributes);
     //accepts array & turns it to a set of variables where name of variable is the key and the value of the variable is the value associated with the key
 
-    require base_path('views/' . $path);
+   require base_path('views/' . $path);
     //for view("index.view.php"), will load views/index.view.php
+
 }
 
 function login($user) {
@@ -53,20 +54,21 @@ function login($user) {
         'firstname' => $user['firstname'],
         'lastname' => $user['lastname'],
         'role' => $user['role'],
-        'approved' => $user['approved']     
+        'approved' => $user['approved'],
+        'request_sent' => $user['request_sent'],    
     ];
 
     //you have to set the session role and other stuffs before you can access it in session/store.php
     $_SESSION['user_id'] = $user['id'];
     $_SESSION['role'] = $user['role']; // Store the role
     $_SESSION['approved'] = $user['approved']; // Store approval status
-
+    $_SESSION['request_sent'] = $user['request_sent'];
 
     // Set session expiration tracking
     $_SESSION['last_activity'] = time(); // Current time
     $_SESSION['expire_time'] = 3600; // Session duration: 1 hour (3600 seconds)
 
-       //sets a cookie, auth_user with an expiration time
+    //sets a cookie, auth_user with an expiration time
     setcookie("auth_user", $user['id'], time() + (3600), "/");
     
  
@@ -78,6 +80,8 @@ function login($user) {
 
 function logout()
 {
+    // error_log("Logging out user: " . json_encode($_SESSION));
+
     /// Unset all session variables
     $_SESSION = [];
 

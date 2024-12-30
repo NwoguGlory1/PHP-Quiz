@@ -13,10 +13,10 @@
               <a href="/contact" class="<?=urlIs('/contact.php') ? 'bg-gray-900 text-white': 'text-gray-300' ?> hover:bg-gray-700 hover:text-white  px-3 py-2 rounded-md text-sm font-medium" >Contact</a>
               
               <?php if ($_SESSION['user'] ?? false) : ?>
-              <a href="/notes" class="<?=urlIs('/notes.php') ? 'bg-gray-900 text-white': 'text-gray-300' ?> hover:bg-gray-700 hover:text-white  px-3 py-2 rounded-md text-sm font-medium" >Notes</a>
-             
+                           
                 <?php if ($_SESSION['role'] == 'supervisor' || $_SESSION['approved'] == true) : ?>
-                <a href="/dashboard" class="<?=urlIs('/dashboard.php') ? 'bg-gray-900 text-white': 'text-gray-300' ?> hover:bg-gray-700 hover:text-white  px-3 py-2 rounded-md text-sm font-medium" >Dashboard</a>
+                  <a href="/notes" class="<?=urlIs('/notes.php') ? 'bg-gray-900 text-white': 'text-gray-300' ?> hover:bg-gray-700 hover:text-white  px-3 py-2 rounded-md text-sm font-medium" >Notes</a>
+                  <a href="/dashboard" class="<?=urlIs('/dashboard.php') ? 'bg-gray-900 text-white': 'text-gray-300' ?> hover:bg-gray-700 hover:text-white  px-3 py-2 rounded-md text-sm font-medium" >Dashboard</a>
                 <?php endif ?>
               <?php endif ?>
             </div>

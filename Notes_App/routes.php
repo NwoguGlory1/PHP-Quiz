@@ -21,6 +21,8 @@ $router->get('/login', 'controllers/session/create.php')->only('guest');
 $router->post('/login', 'controllers/session/store.php')->only('guest');
 
 //only accessible by authenticated supervisors and approved agents
-$router->get('/dashboard', 'controllers/dashboard.php')->only('auth');
+$router->get('/dashboard', 'controllers/session/dashboard.php')->only('auth');
+$router->get('/supervisor-dashboard', 'controllers/session/supervisor-dashboard.php')->only('auth');
+$router->post('/supervisor-dashboard', 'controllers/session/approve_agent.php')->only('auth');
 
 $router->delete('/session', 'controllers/session/destroy.php')->only('auth');

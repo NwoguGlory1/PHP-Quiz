@@ -37,27 +37,36 @@ $user = $db->query('select * from users where email = :email', [
 if ($user) {
     if (password_verify($password, $user['password'])) {
         login($user);
+
 // Redirect based on role
     if ($_SESSION['role'] == 'supervisor') {
         // Supervisors can access the dashboard directly
-        header('location: /');
-        exit();
+        header('location: /supervisor-dashboard');
+        exit();   
     } elseif ($_SESSION['role'] == 'agent') {
-        // Check if the agent is approved
-        if ($_SESSION['approved'] == false) {
-            // Agents who are not approved cannot access the dashboard
-            header('location: /');
+        // If the agent is approved, they can access the dashboard
+        if ($_SESSION['approved'] == true) {
+            header('location: /dashboard');
             exit();
         }
-         // Approved agents can access the dashboard
-         header('location: /');  // Redirect to the home page for agents
-         exit();
-    }
+    
+        // If the agent is not approved, send the approval request
+    if ($_SESSION['approved'] == false && (!$_SESSION['request_sent'])) {
+            // Agents who are not approved cannot access the dashboard
+            //find() was not called on the update query cause nothing is being retrieved
+            $stmt = $db->query('UPDATE users SET request_sent = TRUE WHERE id = :id', [
+                'id' => $user['id']
+            ]);
 
+            // Display a message for the agent
+            echo "Approval request sent to the supervisor.";       
+           // Display waiting approval message
+            echo "<button disabled>Waiting Approval</button>";
+            exit();
+        }
     }
 }
 return view('session/create.view.php', [
     'errors' => ['email' => 'Invalid credentials.']
     ]);
-
-// If they equal, then a session must be created for the user using PHP sessions as well as a cookie
+}
