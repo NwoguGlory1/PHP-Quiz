@@ -1,6 +1,8 @@
 <?php
 
 use Core\Response;
+use Core\App;
+use Core\Database;
 
 function dd($value)
 {
@@ -45,8 +47,7 @@ function view($path, $attributes = [])
 
 }
 
-function login($user) {
-    
+function login($user) {    
     
     //mark that the user has logged in by setting the user session
     $_SESSION['user'] = [
@@ -66,10 +67,10 @@ function login($user) {
 
     // Set session expiration tracking
     $_SESSION['last_activity'] = time(); // Current time
-    $_SESSION['expire_time'] = 3600; // Session duration: 1 hour (3600 seconds)
+    $_SESSION['expire_time'] = 120; // Session duration: 1 hour (3600 seconds)
 
     //sets a cookie, auth_user with an expiration time
-    setcookie("auth_user", $user['id'], time() + (3600), "/");
+    setcookie("auth_user", $user['id'], time() + (120), "/");
     
  
     session_regenerate_id(true);
@@ -80,10 +81,16 @@ function login($user) {
 
 function logout()
 {
-    // error_log("Logging out user: " . json_encode($_SESSION));
-
+     // Resolve the database instance
+     $db = App::resolve(Database::class);
+     
+    // Reset approval status in the database
+    $db->query('UPDATE users SET approved = FALSE WHERE id = :id', [
+        'id' => $_SESSION['user_id']
+]);
     /// Unset all session variables
     $_SESSION = [];
+
 
     //destroys out the session  data on the server
     session_destroy();
