@@ -1,0 +1,9 @@
+{
+    "autoload": {
+        "psr-4" : {
+            "Person\\": "src/classes/Person",
+            "Framework\\": "src/Framework/",
+            "House\\": "src/classes/House"
+        }
+    }
+}

@@ -1,5 +1,5 @@
 <?php
-// namespace House;
+namespace House;
 
 class House {
     public $streetName;

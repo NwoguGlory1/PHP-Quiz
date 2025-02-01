@@ -1,6 +1,8 @@
 <?php
 
-     include 'includes/autoloader.inc.php';
+    //  include 'includes/autoloader.inc.php';
+
+    require 'vendor/autoload.php';
 ?>
 
 <!DOCTYPE html>
@@ -16,13 +18,17 @@
     echo $person1->getPerson();
     echo "<br>";
 
-    $house1 = new House("Ajah", 6);
+    $house1 = new House\House("Ajah", 6);
     echo $house1->getAddress();
     echo "<br>";
 
 
-    // $router = new Framework\Router;
-    // echo get_class($router);
+    $router = new Framework\Router;
+    echo get_class($router);
+    
+    echo "<br>";
+    $houseyear1 = new House\HouseYear();
+    echo get_class($houseyear1);
     ?>
 </body>
 </html>
