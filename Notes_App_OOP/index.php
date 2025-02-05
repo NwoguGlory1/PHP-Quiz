@@ -25,10 +25,14 @@
 
     $router = new Framework\Router;
     echo get_class($router);
-    
+
     echo "<br>";
     $houseyear1 = new House\HouseYear();
-    echo get_class($houseyear1);
+    echo get_class($houseyear1) . '<br>';
+
+    $test = new Models\User(); 
+    $test ->getUsersData("Glory", "Nwogu");
+    $test ->setUsersData("Mitchell", "Obama", "mo@gmail.com", 1234);
     ?>
 </body>
 </html>

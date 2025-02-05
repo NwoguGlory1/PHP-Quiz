@@ -11,6 +11,10 @@ class ComposerStaticInit494430b7a725952fa5a25a14d2e46646
         array (
             'Person\\' => 7,
         ),
+        'M' => 
+        array (
+            'Models\\' => 7,
+        ),
         'H' => 
         array (
             'House\\' => 6,
@@ -19,12 +23,20 @@ class ComposerStaticInit494430b7a725952fa5a25a14d2e46646
         array (
             'Framework\\' => 10,
         ),
+        'C' => 
+        array (
+            'Core\\' => 5,
+        ),
     );
 
     public static $prefixDirsPsr4 = array (
         'Person\\' => 
         array (
             0 => __DIR__ . '/../..' . '/src/classes/Person',
+        ),
+        'Models\\' => 
+        array (
+            0 => __DIR__ . '/../..' . '/src/Models',
         ),
         'House\\' => 
         array (
@@ -33,6 +45,10 @@ class ComposerStaticInit494430b7a725952fa5a25a14d2e46646
         'Framework\\' => 
         array (
             0 => __DIR__ . '/../..' . '/src/Framework',
+        ),
+        'Core\\' => 
+        array (
+            0 => __DIR__ . '/../..' . '/src/Core',
         ),
     );
 
