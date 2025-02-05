@@ -30,9 +30,23 @@
     $houseyear1 = new House\HouseYear();
     echo get_class($houseyear1) . '<br>';
 
+    //this gets data directly from User.php
     $test = new Models\User(); 
-    $test ->getUsersData("Glory", "Nwogu");
-    $test ->setUsersData("Mitchell", "Obama", "mo@gmail.com", 1234);
+    $names = $test ->getUsersData("Glory", "Nwogu");
+     foreach ($names as $name) {
+            echo $name['lastname'] . '<br>';
+        }
+
+    //this updates data directly in User.php without a controller  
+    // $test ->setUsersData("Mitchell", "Obama", "mo@gmail.com", 1234);
+    
+    //this gets data directly from usersview.php
+    $usersobj = new Views\Registration\UsersView();
+    $usersobj->ShowUser("Glory", "Nwogu");
+
+    //this updates data directly in User.php with a controller  
+    $usersobj2  = new Controllers\UsersContr();
+    $usersobj2->createUser("John", "Doe", "johndoe@example.com", "1234");
     ?>
 </body>
 </html>

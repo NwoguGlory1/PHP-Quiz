@@ -10,10 +10,10 @@ class User extends Database {
         $stmnt = $this->connect()->prepare($sql);
         $stmnt ->execute([$firstname, $lastname]);
         $names = $stmnt->fetchAll();
-
-        foreach ($names as $name) {
-            echo $name['lastname'] . '<br>';
-        }
+        return $names;
+        // foreach ($names as $name) {
+        //     echo $name['lastname'] . '<br>';
+        // }
     }
 
     public function setUsersData($firstname, $lastname, $email, $password){

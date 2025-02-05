@@ -5,7 +5,9 @@
             "Framework\\": "src/Framework/",
             "House\\": "src/classes/House",
             "Models\\":  "src/Models",
-            "Core\\": "src/Core"
+            "Core\\": "src/Core",
+            "Views\\Registration\\": "src/views/registration",
+            "Controllers\\": "src/Controllers"
 
         }
     }
